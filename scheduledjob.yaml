@@ -1,0 +1,27 @@
+apiVersion: batch/v2alpha1
+kind: ScheduledJob
+metadata:
+  name: kube-efs-backup
+spec:
+  schedule: "0 3,15 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kube-efs-backup
+            image: grrywlsn/kube-efs-backup:latest
+            env:
+            - name: SOURCE_DIR
+              value: "/efs/"
+            - name: S3_DIR
+              value: "my-s3-bucket/optional-directory"
+            volumeMounts:
+            - mountPath: /efs
+              name: source-dir
+          restartPolicy: OnFailure
+          volumes:
+            - name: source-dir
+              nfs:
+                server: fs-abc1234.efs.eu-west-1.amazonaws.com
+                path: "/"

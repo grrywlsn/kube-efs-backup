@@ -12,10 +12,9 @@ You can set the backup schdule within the Kubernetes yaml; the only things you n
 
 #### usage
 
+see the scheduledjob.yaml on how to deploy container to Kubernetes:
+
+- ***required*** update the NFS server to match the EFS id/region for your account
+- ***required*** update the S3_DIR env variable to the S3 bucket name for backups
 - ideally, pass S3 bucket write access in via IAM role on the ec2 instance
 - use lifecycle policies on the S3 bucket for a nice, reliable way to manage backup retention
-
-
-#### to-do list
-
-- add example yaml of usage
